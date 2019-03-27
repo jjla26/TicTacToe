@@ -5,29 +5,39 @@ import './index.css';
 
 
 class Square extends React.Component {
-    state= {
-        value: null
-    }
+  
 
 
     handleClick = () => {
-        console.log("you click me")
-        this.setState({ value: "X"})
+        console.log("you click me");
+        const { value } = this.props;
+        value.onClick();
     }
+
     render() {
+        const { value } = this.props
       return (
         <button 
-        onClick={ () => this.handleClick()} 
-        className="square">
-          {this.state.value}
+        className="square"
+        onClick={ () => value.onClick()} 
+        >
+          {value}
         </button>
       );
     }
   }
   
   class Board extends React.Component {
+    state= {
+        squares: Array(9).fill(null)
+    }
+    
     renderSquare(i) {
-      return <Square value={i} />;
+      return( 
+      <Square 
+        value={this.state.squares[i]}
+        onClick={this.handleClick(i)} />
+      );
     }
   
     render() {
